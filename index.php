@@ -1,31 +1,31 @@
 <?php
-$pdo = new PDO('mysql:dbname=eemi_20231030;host=127.0.0.1;port=3306', 'root', '');
-$sql = '
-INSERT INTO
-    utilisateur
+if (!empty($_POST)) {
+    $pdo = new PDO('mysql:dbname=eemi_20231030;host=127.0.0.1;port=3306', 'root', '');
+    $sql = '
+    INSERT INTO
+        utilisateur
+            (
+                id,
+                firstname,
+                lastname
+            )
+        VALUE 
         (
-            id,
-            first_name,
-            last_name
-        )
-    VALUE 
-    (
-        NULL,
-        :firstName,
-        :lastName
-    )';
-$req = $pdo->prepare($sql);
+            NULL,
+            :firstName,
+            :lastName
+        )';
+    $req = $pdo->prepare($sql);
 
-$req->bindParam(':firstName', $_POST['firstName']);
-$req->bindParam(':lastName', $_POST['lastName']);
+    $req->bindParam(':firstName', $_POST['firstName']);
+    $req->bindParam(':lastName', $_POST['lastName']);
 
-if ($req->execute()) {
-    echo 'ok';
-} else {
-    echo 'ko';
+    if ($req->execute()) {
+        echo 'ok';
+    } else {
+        echo 'ko';
+    }
 }
-
-echo $sql;
 ?>
 <html>
     <head>
